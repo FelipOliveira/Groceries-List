@@ -2,6 +2,8 @@
 
 A new Flutter project.
 
+Thats a little groceries list project, just for the experience. You may use it for your own projects, but I give you no warranty.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
