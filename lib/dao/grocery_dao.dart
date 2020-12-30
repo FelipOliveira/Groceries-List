@@ -1,29 +1,19 @@
-import 'package:groceries_list/model/item.dart';
-import 'package:groceries_list/repository/grocery_repository.dart';
 import 'package:groceries_list/database/database.dart';
+import 'package:groceries_list/model/item.dart';
 
-class GroceryRepostoryImpl implements GroceryRepository {
+class GroceryDao {
   final dbProvider = DatabaseProvider.dbProvider;
 
-  @override
+  //Adds new Item records
   Future<int> createItem(Item item) async {
     final db = await dbProvider.database;
     var result = db.insert(groceryTABLE, item.toDatabaseJson());
     return result;
   }
 
-  @override
-  Future<int> deleteItem(int id) async {
-    final db = await dbProvider.database;
-    var result =
-        await db.delete(groceryTABLE, where: 'id = ?', whereArgs: [id]);
-
-    return result;
-  }
-
-  @override
-  Future<List<Item>> getGroceriesList(
-      {List<String> columns, String query}) async {
+  //Get All Item items
+  //Searches if query string was passed
+  Future<List<Item>> getItems({List<String> columns, String query}) async {
     final db = await dbProvider.database;
 
     List<Map<String, dynamic>> result;
@@ -43,12 +33,31 @@ class GroceryRepostoryImpl implements GroceryRepository {
     return items;
   }
 
-  @override
+  //Update Item record
   Future<int> updateItem(Item item) async {
     final db = await dbProvider.database;
 
     var result = await db.update(groceryTABLE, item.toDatabaseJson(),
         where: "id = ?", whereArgs: [item.id]);
+
+    return result;
+  }
+
+  //Delete Item records
+  Future<int> deleteItem(int id) async {
+    final db = await dbProvider.database;
+    var result =
+        await db.delete(groceryTABLE, where: 'id = ?', whereArgs: [id]);
+
+    return result;
+  }
+
+  //We are not going to use this in the demo
+  Future deleteAllItems() async {
+    final db = await dbProvider.database;
+    var result = await db.delete(
+      groceryTABLE,
+    );
 
     return result;
   }
