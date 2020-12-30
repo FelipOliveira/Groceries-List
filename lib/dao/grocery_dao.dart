@@ -4,16 +4,14 @@ import 'package:groceries_list/model/item.dart';
 class GroceryDao {
   final dbProvider = DatabaseProvider.dbProvider;
 
-  //Adds new Item records
   Future<int> createItem(Item item) async {
     final db = await dbProvider.database;
     var result = db.insert(groceryTABLE, item.toDatabaseJson());
     return result;
   }
 
-  //Get All Item items
   //Searches if query string was passed
-  Future<List<Item>> getItems({List<String> columns, String query}) async {
+  Future<List<Item>> getItemsList({List<String> columns, String query}) async {
     final db = await dbProvider.database;
 
     List<Map<String, dynamic>> result;
@@ -33,7 +31,6 @@ class GroceryDao {
     return items;
   }
 
-  //Update Item record
   Future<int> updateItem(Item item) async {
     final db = await dbProvider.database;
 
@@ -43,7 +40,6 @@ class GroceryDao {
     return result;
   }
 
-  //Delete Item records
   Future<int> deleteItem(int id) async {
     final db = await dbProvider.database;
     var result =
@@ -52,8 +48,7 @@ class GroceryDao {
     return result;
   }
 
-  //We are not going to use this in the demo
-  Future deleteAllItems() async {
+  Future clearItemsList() async {
     final db = await dbProvider.database;
     var result = await db.delete(
       groceryTABLE,
