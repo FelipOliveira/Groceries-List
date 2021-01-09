@@ -1,7 +1,7 @@
 import 'package:groceries_list/dao/grocery_dao.dart';
 import 'package:groceries_list/model/item.dart';
 
-abstract class GroceryRepository {
+class GroceryRepository {
   final dao = GroceryDao();
 
   Future getAllItems({String query}) => dao.getItemsList(query: query);
